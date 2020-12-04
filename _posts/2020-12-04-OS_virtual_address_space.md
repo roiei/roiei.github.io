@@ -1,6 +1,6 @@
 ---
 title: "Virtual Address Space"
-date: 2020-12-04 10:17:00
+date: 2020-12-04 10:17:00 -0400
 categories: OS
 ---
 
@@ -47,7 +47,7 @@ categories: OS
         
         등 여러 구분된 memory sections들을 지님
 
-&#2;
+&nbsp;
 
 ## Memroy Descriptor
 
@@ -60,15 +60,9 @@ categories: OS
         struct vm_area_struct   *mmap;           <-
         struct rb_root           mm_rb;
 
-
-            동일 자료 구조에 대한 두가지 표현 (각각 list와 rb tree - O(lnN) time)            
-            
-            보통 중복 표현을 피하지만, 
-            list의 경우 순차 탐색에 용이하며, rb tree는 특정 항목 탐색에 용이
-            
+            동일 자료 구조에 대한 두가지 표현 (각각 list와 rb tree - O(lnN) time) 
+            보통 중복 표현을 피하지만, list의 경우 순차 탐색에 용이하며, rb tree는 특정 항목 탐색에 용이            
             이렇게 같은 data를 두 가지 다른 접근 방식으로 사용하는 것 --> thread tree
-
-
         
         struct vm_area_struct   *mmap_cache;      <- 최근 사용한 메모리 영역
         ...
@@ -79,7 +73,6 @@ categories: OS
         
                 9개의 thread가 주소 공간을 공유해도, mm_users 값은 9지만, mm_count는 1임
                 mm_users 값이 0이 될 때 mm_count도 0이 됨 (이때 메모리 해제)
-
         ...
 
         struct list_head        mmlist;            /* list of all mm_structs */
@@ -89,8 +82,6 @@ categories: OS
             mm_struct init_mm은, /kernel/mm/init-mm.c에 존재
             
                 kernel/fork.c에 정의된 mmlist_lock에 의해서 동시 접근이 제한
-
-
 
         unsigned long   start_code;           /* start address of code */
         unsigned long   end_code;             /* final address of code */
@@ -114,6 +105,8 @@ categories: OS
    };
 ```
 
+&nbsp;
+
 
 ## memory descriptor allocation
 
@@ -136,8 +129,7 @@ categories: OS
             tsk->mm = current->mm; 임
         
         이런 process를 thread라고 함
-        
-    
+            
     process 종료 시, 
         exit_mm이 호출 (@ kernel/exit.c)
         mm_count를 줄이고, 0이 되면, 더 이상 memory descriptor 사용처가 없기에 free_mm 호출
@@ -145,7 +137,7 @@ categories: OS
 
         mm_struct 구조체가 mm_cachep slab cache로 돌아감
 
-
+&nbsp;
 
 ## mm_struct 구조체와 KERNEL thread
 
@@ -158,8 +150,6 @@ categories: OS
     새로운 address
 
 
-
-
     새로운 address space를 사용하도록 active_mm을 update
     kernel thread는 자신만의 address space가 없기에 mm은 NULL
     
@@ -170,7 +160,7 @@ categories: OS
     이로서 kernel thread는 이전 process의 page table이 필요할 때 사용 가능
     kernel thread는 user level address space에 접근하지 않으므로 커널 memory에 해당하는 address space 정보만 사용
 
-
+&nbsp;
 
 ## virtual memory area (VMA)
 
@@ -237,14 +227,13 @@ categories: OS
     };
 ```
 
-
     각 memory descriptor는 process address space 내의 고유 구간을 나타냄
     vm_start 항목은 해당 구간의 (낮은)시작 address 
     vm_end는 구간의 마지막 주소(높은)
     
     vm_end - vm_start가 memory area의 byte length [vm_start, vm_end)
 
-
+&nbsp;
 
 ## VMA flag
 ```
@@ -255,7 +244,6 @@ categories: OS
 
     <linux/mm.h>    
     VMA flag는 hardware가 아닌 kernel의 동작 지정
-
 
     VM_READ,
     VM_WRITE
@@ -281,13 +269,14 @@ categories: OS
 
         object data는 VM_READ, VM_WRITE 할당, VM_EXEC는 할당 X
 
+&nbsp;
+
 
 ## VMA 동작
     vm_area_struct 구조체의 vm_ops 항목
         : 커널이 해당 memory region을 조작히는 방법
-
     
-    
+```C
     vm_operations_struct
      +- void (*open)(struct vm_area_struct * area);
      +- void (*close)(struct vm_area_struct * area);
@@ -309,22 +298,22 @@ categories: OS
 
     int access(...)
         : get_user_pages() 호출 failure 시 access_process_vm에서 호출하는 함수
+```
 
-
+&nbsp;
 
 ## memory area list & tree (memory area thread tree)
 
-    
+```C    
         struct mm_struct {
             struct vm_area_struct * mmap;        /* list of VMAs */
             struct rb_root mm_rb;
             struct vm_area_struct * mmap_cache;    /* last find_vma result */
             
             ...
-            
+```        
 
-    mmap과 mm_rb는 thread tree 자료 구조임
-    
+    mmap과 mm_rb는 thread tree 자료 구조임    
         mmap
             : 모든 memory area object를 하나의 linked list로 보관
             
@@ -348,38 +337,30 @@ categories: OS
                 root node는 항상 red node
                 
                 검색, 삽입, 삭제가 O(log(n))   <-- O(logN)을 보장한다는 것이 특징 (FBT는 보장은 못함)
-
+&nbsp;
 
 ## Actual memory area
-    process의 address space와 memory area 내부
-    
+    process의 address space와 memory area 내부    
         /proc
         pmap utility
         
         를 통해서 살펴 볼 수 있음
 
-
     ex.
-        특정 app의 address space (mm_struct의 각 vm_area_struct) 살펴보기
-        
-        
+        특정 app의 address space (mm_struct의 각 vm_area_struct) 살펴보기               
             text area
             data area
             BSS  area
             
-        shared lib. link 시 각 shared lib이 사용하는 text/data/BSS area가 존재
-        
+        shared lib. link 시 각 shared lib이 사용하는 text/data/BSS area가 존재        
             그리고
             process의 stack area
-
         
-        /proc/<pid>/maps
-        
+        /proc/<pid>/maps        
             00e80000-00faf000       r-xp    00000000 03:01 208530  /lib/tls/libc-2.5.1.so
             ...
             
             시작-끝  권한  offset  majkor:minor  inode  file
-
 
         pmap 1426
         
@@ -400,12 +381,11 @@ categories: OS
 
         위에서 ZI는 file이 할당되어 있지 않은 장치 00:00과 0번 inode memory area이다.
 
-
+&nbsp;
 
 ## memroy area handling
     커널은 주어진 VMA에 대해서 주소 존재 여부 확인과 같은 동작을 빈번히 수행함    
     mmap의 기본 동작을 구성
-
 
     struct vm_area_struct *
     find_vma(sruct mm_struct *mm, unsigned long addr);
@@ -422,15 +402,13 @@ categories: OS
         주어진 주소가 cache에 없으면 memory descriptor(mm)에 속한 memory area(vma_area_struct)를 탐색
             RB-tree를 통해 탐색
 
-
-            struct vm_area_struct *find_vma(struct mm_struct *mm, unsigned long addr)
-            {
+```C
+            struct vm_area_struct *find_vma(struct mm_struct *mm, unsigned long addr) {
                 struct vm_area_struct *vma = NULL;
                 
                 vma = ACCESS_ONCE(mm->mmap_cache);
                 if (!(vma && vma->vm_end > addr && vma->vm_start <= addr)) {  <-- cache에 없으면, 
-                    ...
-                    
+                    ...                    
                     rb_node = mm->mm_rb.rb_node;
                     vma = NULL;
                     
@@ -451,21 +429,17 @@ categories: OS
                     
                     if (vma)
                         mm->mmap_cache = vma;           <-- 방금 찾은 것은 cache에 keep (hit rate 30~40%)            
-                }
-            
+                }            
                 return vma;
             }
-
-
+```
 
     struct vm_area_struct *
     find_vma_prev(struct mm_struct *mm, unsigned long addr,
-        struct vm_area_struct **pprev)
-        
+        struct vm_area_struct **pprev)        
         
         find_vma의 동작과 동일하나 addr 이전의 마지막 VMA를 반환하는 점이 다름
-        mm/mmap.c file에 정의되어 있음, <linux/mm.h>에 선언
-        
+        mm/mmap.c file에 정의되어 있음, <linux/mm.h>에 선언        
         pprev 인자에는 addr 앞 쪽의 VMA pointer가 저장됨
 
 
@@ -479,10 +453,9 @@ categories: OS
             vma = NULL;
         return vma;
 
-
+&nbsp;
 
 ## mmap() & do_mmap(): address range generation
-
 
     do_mmap
         : do_mmap은 process의 address space에 address range를 추가
@@ -504,25 +477,23 @@ categories: OS
 
     do_mmap 함수의 동작은 mmap system call을 통해 user space에 제공됨
         mmap system call 호출은 다음과 같이 정의
-
+```C
             unsigned long sys_mmap2(unsigned long addr, size_t len,
                         unsigned long prot, unsigned long flags,
                         unsigned long fd, unsigned long pgoff)
             {
                 return do_mmap2(addr, len, prot, flags, fd, pgoff, PAGE_SHIFT-12);
             }
-            
+```        
             
             이 system call은 mmap의 두 번째 변화형이라 mmap2임
             워래 mmap은 마지막 인자로 byte unit offset을 사용했음
             
             mmap2는 page unit offset 사용
-                offset이 더 커져서 더 큰 file 할당 가능
-                
+                offset이 더 커져서 더 큰 file 할당 가능               
 
         
-    do_mmap(file *file, addr, len, prot, flga, offset)
-    
+    do_mmap(file *file, addr, len, prot, flga, offset)    
         offset 위치에 len 길이만큼 주소 범위를 할당
         file에 NULL, offset에 0 지정 경우
             anynymous mapping
@@ -546,25 +517,20 @@ categories: OS
                 MAP_ANYNYMOUS   : 파일 지정 할당이 아닌 익명 할당
                 ....
 
-
+&nbsp;
 
 ## munmap() & do_munmap(): address range free
-
     do_munmap
      : 지정한 process address space에서 address range를 제거
-     (즉, VMA를 제거)
+     (즉, VMA를 제거)     
      
-     
-        int do_munmap(struct mm_struct *mm, start, len)
-
+    int do_munmap(struct mm_struct *mm, start, len)
     int munmap(void *start, len)
 
-
     이 system call은 mm//mmap.c file에 정의
-    단순히 do_munmap()의 wrapper
-    
-    
-    
+    단순히 do_munmap()의 wrapper    
+
+```C
         armlinkage long sys_munmap(unsigned long addr, size_t len)
         {
             ...
@@ -576,7 +542,8 @@ categories: OS
             up_write(&mm>mmap_sem);
             return ret;
         }
-    
+```
+&nbsp;
         
 ## Page table
     virtual address는, physical page table entry (page-frame)이 할당된 virtual page table entry를 사용
@@ -594,16 +561,13 @@ categories: OS
         필요에 의해 compiler optimization을 통해 kernel page table을 단순화 시킬 수 있음
         
     PGD (Page Global Directory)
-        최상위 page table은 (page global directory인)pgd_t 형 배열
-        
+        최상위 page table은 (page global directory인)pgd_t 형 배열        
             pgd_t는 대부분 unsigned long
 
-        PGD는 PMD (Page Middle Directory)를 가리킴
-        
+        PGD는 PMD (Page Middle Directory)를 가리킴        
             pmd_t
             
-        PMD는 PTE (Page Table Entry)를 가리킴
-        
+        PMD는 PTE (Page Table Entry)를 가리킴        
             pte_t
 
  ```
@@ -620,6 +584,7 @@ categories: OS
                               | pgd_t |              | pmd_t |              +-------+
                               +-------+              +-------+              
 ```
+&nbsp;
 
      TLB 사용
         TLB hit 시 TLB entry 사용
