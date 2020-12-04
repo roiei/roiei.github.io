@@ -1,5 +1,5 @@
 ---
-title: "243. Shortest Word Distance"
+title: "243 Shortest Word Distance"
 date: 2020-12-04 10:41:00 -0400
 categories: algorithm-leetcode
 ---
