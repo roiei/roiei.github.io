@@ -15,7 +15,7 @@ categories: OS
     prcess에게 접근 권한이 없는 메모리 주소 영역
     유효한 주소의 이런 영역을 -> 메모리 영역이라고 함
 
-&#1;
+&#160;
 
 ## segment fault
     유효하지 않은 영역에 access 시 발생
@@ -47,7 +47,7 @@ categories: OS
         
         등 여러 구분된 memory sections들을 지님
 
-$#2;
+&#2;
 
 ## Memroy Descriptor
 
