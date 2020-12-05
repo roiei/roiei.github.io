@@ -296,3 +296,6 @@ pages_lists:
     About: ['소개', '/about']
     Archive: ['글목록', '/archive']
     
+toc: true
+toc_label: "Table of Contents"
+toc_icon: "cog" # 내 컨텐츠에 대한 목차를 오른쪽에 띄워줌
