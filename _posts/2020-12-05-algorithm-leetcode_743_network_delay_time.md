@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "743 Network Delay Time"
 date: 2020-12-05
 categories: algorithm-leetcode
 ---
