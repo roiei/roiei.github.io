@@ -29,6 +29,8 @@ teaser                   : # path of fallback teaser image, e.g. "/assets/images
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
+
+
 words_per_minute         : 200
 comments:
   provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "staticman_v2", "utterances", "custom"
@@ -47,22 +49,28 @@ comments:
   staticman:
     branch               : # "master"
     endpoint             : # "https://{your Staticman v3 API}/v3/entry/github/"
+    
 reCaptcha:
   siteKey                :
   secret                 :
+  
 atom_feed:
   path                   : # blank (default) uses feed.xml
+  
 search                   : # true, false (default)
 search_full_content      : # true, false (default)
 search_provider          : # lunr (default), algolia, google
+
 algolia:
   application_id         : # YOUR_APPLICATION_ID
   index_name             : # YOUR_INDEX_NAME
   search_only_api_key    : # YOUR_SEARCH_ONLY_API_KEY
   powered_by             : # true (default), false
+  
 google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
+  
 # SEO Related
 google_site_verification :
 bing_site_verification   :
@@ -72,13 +80,16 @@ naver_site_verification  :
 # Social Sharing
 twitter:
   username               :
+  
 facebook:
   username               :
   app_id                 :
   publisher              :
+  
 og_image                 : # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
+
 social:
   type                   : # Person or Organization (defaults to Person)
   name                   : # If the user or organization name differs from the site's name
@@ -94,11 +105,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "Roy"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Me is a person who want to learn and share whatever I've learn."
   location         : "Somewhere"
-  email            :
+  email            : 
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
@@ -280,3 +291,8 @@ defaults:
       comments: # true
       share: true
       related: true
+
+pages_lists:
+    About: ['소개', '/about']
+    Archive: ['글목록', '/archive']
+    
