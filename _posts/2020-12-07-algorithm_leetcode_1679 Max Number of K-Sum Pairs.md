@@ -65,6 +65,8 @@ def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List
     return ret
 ```
 
+O(MN)
+
 &nbsp;
 
 
