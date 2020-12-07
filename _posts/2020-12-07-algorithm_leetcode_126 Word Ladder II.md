@@ -1,5 +1,5 @@
 ---
-title: "1679 Max Number of K-Sum Pairs"
+title: "126 Word Ladder II"
 date: 2020-12-07
 categories: algorithm-leetcode
 ---
