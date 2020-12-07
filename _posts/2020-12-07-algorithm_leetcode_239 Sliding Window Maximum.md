@@ -16,12 +16,6 @@ nums = [1,3,-1,-3,5,3,6,7], k = 3
 
 ### my solution
 
-for every single input, it checks the previous inputs
-
- M + (M - 1) + (M - 2) ... = M(M + 1)/2
-  = O(M^2)
-
-
 ```python
 def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
     if not nums or len(nums) < k:
