@@ -1,5 +1,5 @@
 ---
-title: "sigc++ example"
+title: "sigc example"
 date: 2020-02-08 00:00:00 -0400
 categories: C++
 ---
