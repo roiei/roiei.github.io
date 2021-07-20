@@ -6,45 +6,15 @@ categories: algorithm-leetcode
 
 ### problem definition
 
-for each time, 
-    the CPU need to do task or being idle
-task could be done in any order.
+gas  = [1,2,3,4,5]
+cost = [3,4,5,1,2]
+-> 3
 
-동일 task를 수행한 이후에는 적어도 n의 시간을 쉬어야 함
+gas[i] is the number of gas
+cost[i] is the cost to off the position
 
-1. 
-tasks = ["A","A","A","B","B","B"], n = 2
+if it is possible to pass all the ways in clockwise without out of gas, then return the start index but -1.
 
-A -> B -> idle -> A -> B -> idle -> A -> B
- = 8
-
-A:3, B:3
-
-최대 빈출 task의 수는 3
-즉, 3 - 1의 interval 존재 
-
-2 x 2 = 4의 idle padding 필요
-
-B:3 이고 이는 interval 수 2 보다 1 크니, 
-B 2개만 idle로 사용 가능
-
-즉, 4 - 2 = 2개의 idle 추가 필요
-
-
-2. 
-["A","A","A","A","A","A","B","C","D","E","F","G"], n = 2
-
-A -> B -> C -> A -> D -> E -> A -> F -> G -> A -> idle -> idle -> A -> idle -> idle -> A
-
-즉, 가장 빈번한 task의 수 - 1이 필요 interval 수
-각 interval은 n의 pad를 필요
-위 경우
-A:6 이니, 
-
-(6 - 1)x2 = 10의 추가 idle 필요
-
-그러나 B~G가 각각 1씩 존재하기에, 
-10 - 6 = 4의 pad 필요
 
 
 ### 1st solution
