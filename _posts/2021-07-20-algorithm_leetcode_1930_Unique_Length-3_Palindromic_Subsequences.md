@@ -1,6 +1,6 @@
 ---
-title: "243 Shortest Word Distance"
-date: 2020-12-04 10:41:00 -0400
+title: "1930. Unique Length-3 Palindromic Subsequences"
+date: 2021-07-20 10:41:00 -0400
 categories: algorithm-leetcode
 ---
 
