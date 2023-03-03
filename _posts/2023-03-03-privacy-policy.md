@@ -1,7 +1,7 @@
 ---
 title: "Privacy Policy"
-date: 2020-12-05
-categories: etc
+date: 2020-12-05 17:31:00 -0400
+categories: jekyll update
 ---
 
 
