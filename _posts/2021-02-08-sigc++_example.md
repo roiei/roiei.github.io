@@ -4,7 +4,7 @@ date: 2020-02-08 00:00:00 -0400
 categories: C++
 ---
 
-## define signal and connect it to a function
+## 개인정보 처리방침
 
 &nbsp;
 
