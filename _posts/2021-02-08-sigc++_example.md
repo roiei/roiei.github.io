@@ -1,10 +1,10 @@
 ---
-title: "개인정보 처리방침"
+title: "개인정보 처리방침 (Privacy Policy)"
 date: 2020-02-08 00:00:00 -0400
 categories: C++
 ---
 
-## 개인정보 처리방침
+## 개인정보 처리방침 (Privacy Policy)
 
 &nbsp;
 
